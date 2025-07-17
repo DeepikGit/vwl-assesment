@@ -40,7 +40,6 @@ pipeline {
       steps {
         echo "🛡️ Scanning Docker image with Trivy..."
         sh '''
-          // trivy image --severity CRITICAL,HIGH --exit-code 1 -f json -o trivy-report.json $IMAGE_NAME || true
           trivy image --severity CRITICAL,HIGH -f table $IMAGE_NAME || true
           if grep -q '"Severity": "CRITICAL"' trivy-report.json; then
             echo "❌ Trivy found CRITICAL issues. Failing build."
